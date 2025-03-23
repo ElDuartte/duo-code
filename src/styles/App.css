@@ -63,4 +63,7 @@ button:focus-visible {
 
 .title{
   color: var(--white);
+  justify-self: center;
+  font-size: 3em;
+  margin-bottom: 30px;
 }

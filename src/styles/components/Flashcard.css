@@ -1,8 +1,7 @@
 .flashcard-container {
   background-color: white;
   color: black;
-  max-width: 700px;
-  /* width: auto; */
-  /* height: auto; */
+  max-width: 600px;
+  border-radius: 25px;
   padding: 20px;
 }
