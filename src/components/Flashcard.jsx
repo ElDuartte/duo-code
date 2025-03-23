@@ -1,4 +1,3 @@
-import "../styles/Flashcard.css";
 
 function Flashcard() {
   const questionsObj = {
@@ -23,7 +22,7 @@ function Flashcard() {
         <h1 className="question">{questionsObj.question}</h1>
         <div className="answers-container">
           {questionsObj.answers.map((ele, index) => (
-            <p className="answer">{ele}</p>
+            <p className="answer text-code">{ele}</p>
           ))}
         </div>
         <div className="flashcard-button-container">

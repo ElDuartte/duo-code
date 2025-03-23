@@ -3,11 +3,10 @@ import Flashcard from "./components/Flashcard.jsx";
 
 function App() {
   return (
-    <>
-      <h1>Hola esto es duoCode</h1>
+    <section className="container">
+      <h1 className="title">DuoCode</h1>
       <Flashcard />
-      <p>test test test test test</p>
-    </>
+    </section>
   );
 }
 
