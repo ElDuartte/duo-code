@@ -1,3 +1,4 @@
+import { useState } from "react";
 
 function Flashcard() {
   const questionsObj = {
@@ -16,21 +17,58 @@ function Flashcard() {
       },
     },
   };
+
+  const [selectedAnswer, setSelectedAnswer] = useState("");
+  const [result, setResult] = useState(null);
+
+  const handleChange = (e) => {
+    setSelectedAnswer(e.target.value);
+  };
+
+  const handleNext = () => {
+    if (selectedAnswer === questionsObj.correct) {
+      setResult({ status: "correct", message: questionsObj.why.correct });
+    } else if (selectedAnswer) {
+      setResult({
+        status: "wrong",
+        message: questionsObj.why.wrong[selectedAnswer],
+      });
+    } else {
+      setResult({ status: "none", message: "Please select an answer." });
+    }
+  };
+
   return (
-    <>
-      <div className="flashcard-container">
-        <h1 className="question">{questionsObj.question}</h1>
-        <div className="answers-container">
-          {questionsObj.answers.map((ele, index) => (
-            <p className="answer text-code">{ele}</p>
-          ))}
-        </div>
-        <div className="flashcard-button-container">
-          <button type="button">Back</button>
-          <button type="button">Next</button>
-        </div>
+    <div className="flashcard-container">
+      <h1 className="question">{questionsObj.question}</h1>
+      <div className="answers-container">
+        {questionsObj.answers.map((ele, index) => (
+          <div key={index} className="answer-option">
+            <input
+              type="radio"
+              id={`answer-${index}`}
+              name="answer"
+              value={ele}
+              checked={selectedAnswer === ele}
+              onChange={handleChange}
+            />
+            <label htmlFor={`answer-${index}`} className="answer text-code">
+              {ele}
+            </label>
+          </div>
+        ))}
       </div>
-    </>
+      <div className="flashcard-button-container">
+        <button type="button" onClick={handleNext}>
+          Next
+        </button>
+      </div>
+      {result && (
+        <div className={`result ${result.status}`}>
+          <p>{result.message}</p>
+        </div>
+      )}
+    </div>
   );
 }
 export default Flashcard;
