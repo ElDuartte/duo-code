@@ -19,12 +19,17 @@
 
 a {
   font-weight: 500;
-  color: var(--white);
+  color: var(--background);
   text-decoration: inherit;
 }
 
-a:hover {
+/* a:hover {
   color: var(--blue);
+} */
+
+a:active{
+  background-color: var(--blue);
+  transform: scale(1.05);
 }
 
 button {

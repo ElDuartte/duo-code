@@ -5,3 +5,35 @@
   border-radius: 25px;
   padding: 20px;
 }
+
+.answer-option {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.answer-option:hover {
+  background: var(--blue);
+}
+
+.answer-option.selected {
+  font-weight: bold;
+  border: 3px solid gray;
+}
+
+.correct{
+  background-color: green;
+}
+
+.wrong{
+  background-color: red;
+}
+
+.result{
+  /* background-color: black; */
+  height: 50px;
+  padding: 20px;
+}
