@@ -11,8 +11,7 @@ function Flashcard() {
         "Due to a historical bug in JavaScript, `typeof null` incorrectly returns 'object'.",
       wrong: {
         null: "`null` is a value, not a type.",
-        undefined:
-          "`undefined` represents an uninitialized variable, whereas `null` is an assigned value.",
+        undefined: "`undefined` represents an uninitialized variable, whereas `null` is an assigned value.",
         string: "`null` is not a string; it's a special primitive value.",
       },
     },
@@ -21,13 +20,10 @@ function Flashcard() {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [result, setResult] = useState(null);
 
-  const handleChange = (e) => {
-    setSelectedAnswer(e.target.value);
-  };
-
   const handleNext = () => {
     if (selectedAnswer === questionsObj.correct) {
       setResult({ status: "correct", message: questionsObj.why.correct });
+
     } else if (selectedAnswer) {
       setResult({
         status: "wrong",
@@ -38,23 +34,19 @@ function Flashcard() {
     }
   };
 
+  const handleSelect = (answer) => {
+    setSelectedAnswer(answer);
+  };
+
+  console.log(result)
+
   return (
     <div className="flashcard-container">
       <h1 className="question">{questionsObj.question}</h1>
       <div className="answers-container">
         {questionsObj.answers.map((ele, index) => (
-          <div key={index} className="answer-option">
-            <input
-              type="radio"
-              id={`answer-${index}`}
-              name="answer"
-              value={ele}
-              checked={selectedAnswer === ele}
-              onChange={handleChange}
-            />
-            <label htmlFor={`answer-${index}`} className="answer text-code">
-              {ele}
-            </label>
+          <div key={index} className={`answer-option ${selectedAnswer === ele ? "selected" : ""}`} onClick={() => handleSelect(ele)}>
+            {ele}
           </div>
         ))}
       </div>
