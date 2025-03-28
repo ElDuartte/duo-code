@@ -1,0 +1,21 @@
+.flashcard-container {
+  background-color: var(--white);
+  color: black;
+  max-width: 600px;
+  border-radius: 25px;
+  padding: 20px;
+}
+
+.correct{
+  background-color: green;
+}
+
+.wrong{
+  background-color: red;
+}
+
+.result{
+  /* background-color: black; */
+  height: 50px;
+  padding: 20px;
+}
