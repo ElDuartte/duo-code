@@ -1,4 +1,5 @@
 @import url(./index.css);
 
 /* Components */
-@import url(./components/Flashcard.css)
+@import url(./components/Flashcard.css);
+@import url(./components/Results.css);

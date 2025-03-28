@@ -24,16 +24,3 @@
   border: 3px solid gray;
 }
 
-.correct{
-  background-color: green;
-}
-
-.wrong{
-  background-color: red;
-}
-
-.result{
-  /* background-color: black; */
-  height: 50px;
-  padding: 20px;
-}
