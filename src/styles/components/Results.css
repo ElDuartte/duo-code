@@ -6,16 +6,18 @@
   padding: 20px;
 }
 
-.correct{
+.correct {
   background-color: green;
 }
 
-.wrong{
+.wrong {
   background-color: red;
 }
 
-.result{
-  /* background-color: black; */
-  height: 50px;
+.result {
+  background-color: var(--white);
+  color: black;
+  max-width: 600px;
+  border-radius: 25px;
   padding: 20px;
 }
