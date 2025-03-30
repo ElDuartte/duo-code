@@ -1,28 +1,28 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getCurrentCard, setCurrentCard } from "../Utils";
-import questions from "../assets/questions.json";
 
-function Results({ response }) {
+function Results({ response, showResults }) {
   const currentCardIndex = getCurrentCard();
-  const totalCards = questions.length;
 
   const handleNext = () => {
-    const newCardIndex = Math.min(currentCardIndex + 1, totalCards - 1);
-    setCurrentCard(newCardIndex);
+    const newIndex = currentCardIndex + 1;
+    setCurrentCard(newIndex);
+    showResults();
   };
 
   const handlePrevious = () => {
-    const newCardIndex = Math.max(currentCardIndex - 1, 0);
-    setCurrentCard(newCardIndex);
+    const newIndex = currentCardIndex - 1;
+    setCurrentCard(newIndex);
+    showResults();
   };
 
   return (
     <div className={`result ${response.status} flashcard-container`}>
-      <h2>Question {currentCardIndex + 1}</h2>
-      <br />
+      <h2>
+        The answer for question {currentCardIndex + 1} is {response.status}!
+      </h2>
       <h3>{response.question}</h3>
-      <br />
       <p>{response.message}</p>
 
       <div style={{ marginTop: "20px" }}>
@@ -40,19 +40,17 @@ function Results({ response }) {
           Previous
         </button>
 
-        <Link to="/">
-          <button
-            onClick={handleNext}
-            disabled={response.id === 0 || currentCardIndex === response.id}
-            style={{
-              padding: "10px",
-              backgroundColor: "#2196F3",
-              color: "white",
-              borderRadius: "4px",
-            }}
-          >
-            Next
-          </button>
+        <Link
+          to="/"
+          onClick={handleNext}
+          style={{
+            padding: "10px",
+            backgroundColor: "#2196F3",
+            color: "white",
+            borderRadius: "4px",
+          }}
+        >
+          Next
         </Link>
       </div>
     </div>
