@@ -1,0 +1,171 @@
+{
+  "cards": [
+    {
+      "id": 0,
+      "question": "What is the output of `typeof null` in JavaScript?",
+      "answers": ["object", "null", "undefined", "string"],
+      "correct": "object",
+      "why": {
+        "correct": "Due to a historical bug in JavaScript, `typeof null` incorrectly returns 'object'.",
+        "wrong": {
+          "null": "`null` is a value, not a type.",
+          "undefined": "`undefined` represents an uninitialized variable, whereas `null` is an assigned value.",
+          "string": "`null` is not a string; it's a special primitive value."
+        }
+      }
+    },
+    {
+      "id": 1,
+      "question": "What does `0.1 + 0.2 === 0.3` evaluate to in JavaScript?",
+      "answers": ["true", "false"],
+      "correct": "false",
+      "why": {
+        "correct": "Due to floating-point precision issues, the sum of 0.1 and 0.2 is not exactly equal to 0.3.",
+        "wrong": {
+          "true": "This would be correct if there were no precision errors in binary floating-point representation."
+        }
+      }
+    },
+    {
+      "id": 2,
+      "question": "Which of the following statements about `let` and `const` is true?",
+      "answers": [
+        "`let` allows redeclaration and reassignment",
+        "`const` allows reassignment but not redeclaration",
+        "`let` does not allow block scoping",
+        "`const` variables can be reassigned"
+      ],
+      "correct": "`let` allows redeclaration and reassignment",
+      "why": {
+        "correct": "`let` allows both redeclaration and reassignment within its scope, unlike `const`, which cannot be reassigned or declared more than once.",
+        "wrong": {
+          "`const` allows reassignment but not redeclaration": "`const` does not allow reassignment or redeclaration.",
+          "`let` does not allow block scoping": "`let` does support block scoping.",
+          "`const` variables can be reassigned": "`const` variables cannot be reassigned once initialized."
+        }
+      }
+    },
+    {
+      "id": 3,
+      "question": "What is the result of `NaN === NaN` in JavaScript?",
+      "answers": ["true", "false"],
+      "correct": "false",
+      "why": {
+        "correct": "By definition, `NaN` does not equal itself due to its meaning as 'Not-A-Number'.",
+        "wrong": {
+          "true": "While `NaN` represents an indeterminate value, it is never equal to any value, including itself."
+        }
+      }
+    },
+    {
+      "id": 4,
+      "question": "What does function hoisting refer to in JavaScript?",
+      "answers": [
+        "Moving function declarations to the top of their scope",
+        "Moving function expressions to the top of their scope",
+        "Hoisting variables with `var`",
+        "Hoisting built-in functions"
+      ],
+      "correct": "Moving function declarations to the top of their scope",
+      "why": {
+        "correct": "Function hoisting refers to JavaScript's behavior of moving function declarations to the top of their containing scope during parsing.",
+        "wrong": {
+          "Moving function expressions to the top of their scope": "Function expressions are not hoisted in the same way as declarations; they must be called after declaration.",
+          "Hoisting variables with `var`": "`var` variables can be referenced before their declaration due to hoisting, but functions are hoisted differently.",
+          "Hoisting built-in functions": "This refers more to function calls rather than variable hoisting."
+        }
+      }
+    },
+    {
+      "id": 5,
+      "question": "What is the value of `this` inside a regular function?",
+      "answers": [
+        "The global object",
+        "The function itself",
+        "undefined",
+        "null"
+      ],
+      "correct": "The global object",
+      "why": {
+        "correct": "`this` refers to the global object when used inside a regular function, unless another context is provided through methods or `apply/bind/call`.",
+        "wrong": {
+          "The function itself": "`this` does not refer to the function; that's more related to functions as objects with properties.",
+          "undefined": "`undefined` would be the case if `this` were not assigned and in strict mode, but by default it refers to the global object.",
+          "null": "`null` is never what `this` refers to in this context."
+        }
+      }
+    },
+    {
+      "id": 6,
+      "question": "What is the difference between `undefined` and `null` in JavaScript?",
+      "answers": [
+        "`undefined` is a value, `null` is a type",
+        "`undefined` represents uninitialized variables, `null` represents absence of a value",
+        "`undefined` can be assigned, `null` cannot",
+        "`undefined` is a primitive, `null` is an object"
+      ],
+      "correct": "`undefined` represents uninitialized variables, `null` represents absence of a value",
+      "why": {
+        "correct": "`undefined` indicates that a variable has not been initialized, while `null` explicitly denotes the intentional absence of a value.",
+        "wrong": {
+          "`undefined` is a value, `null` is a type": "`undefined` and `null` are both values; neither is inherently a 'type' in this context.",
+          "`undefined` can be assigned, `null` cannot": "`undefined` cannot be directly assigned; it represents the state of an uninitialized variable, whereas `null` can be explicitly assigned.",
+          "`undefined` is a primitive, `null` is an object": "Both are primitives, but `typeof null` incorrectly returns 'object' due to historical reasons."
+        }
+      }
+    },
+    {
+      "id": 7,
+      "question": "What does the event loop in JavaScript do?",
+      "answers": [
+        "Manages asynchronous operations",
+        "Handles concurrency",
+        "Processes synchronous tasks only",
+        "Both A and B"
+      ],
+      "correct": "Both A and B",
+      "why": {
+        "correct": "The event loop manages asynchronous operations and handles concurrency by allowing non-blocking I/O.",
+        "wrong": {
+          "Manages asynchronous operations": "While true, this is part of the broader context of what the event loop does.",
+          "Handles concurrency": "This is also correct, as the event loop allows multiple tasks to be processed concurrently."
+        }
+      }
+    },
+    {
+      "id": 8,
+      "question": "What is the difference between `async` and `await` in JavaScript?",
+      "answers": [
+        "`async` defines a function that can perform asynchronous operations",
+        "`await` is used inside `async` functions to wait for a promise",
+        "`async` runs code asynchronously, `await` waits synchronously",
+        "Both A and B"
+      ],
+      "correct": "Both A and B",
+      "why": {
+        "correct": "`async` defines an asynchronous function capable of handling promises, while `await` is used inside such functions to wait for a promise to resolve.",
+        "wrong": {
+          "`async` runs code asynchronously, `await` waits synchronously": "While `async` allows code to run asynchronously, `await` does not make the entire function synchronous; it simply pauses execution until the promise resolves."
+        }
+      }
+    },
+    {
+      "id": 9,
+      "question": "What is the purpose of the spread operator (`...`) in JavaScript?",
+      "answers": [
+        "Converts an array into a string",
+        "Used for destructuring arrays",
+        "Clones objects and arrays",
+        "Both B and C"
+      ],
+      "correct": "Both B and C",
+      "why": {
+        "correct": "The spread operator is used for both destructuring arrays (extracting elements) and cloning objects and arrays by creating copies.",
+        "wrong": {
+          "Converts an array into a string": "This is more related to `Array.toString()` or template literals.",
+          "Used for destructuring arrays": "While true, it also serves other purposes like cloning."
+        }
+      }
+    }
+  ]
+}
