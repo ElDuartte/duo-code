@@ -1,66 +1,93 @@
 import { useState } from "react";
+import Results from "./Results";
+import questions from "../assets/questions.json";
 
 function Flashcard() {
-  const questionsObj = {
-    id: 1,
-    question: "What is the output of `typeof null` in JavaScript?",
-    answers: ["object", "null", "undefined", "string"],
-    correct: "object",
-    why: {
-      correct:
-        "Due to a historical bug in JavaScript, `typeof null` incorrectly returns 'object'.",
-      wrong: {
-        null: "`null` is a value, not a type.",
-        undefined: "`undefined` represents an uninitialized variable, whereas `null` is an assigned value.",
-        string: "`null` is not a string; it's a special primitive value.",
-      },
-    },
-  };
-
   const [selectedAnswer, setSelectedAnswer] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState({});
+  const [showResults, setShowResults] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Check if questions array is loaded
+  if (!questions || !questions.cards || !questions.cards.length) {
+    return <div>Error: Questions data is missing.</div>;
+  }
+
+  const currentQuestion = questions.cards[currentIndex];
 
   const handleNext = () => {
-    if (selectedAnswer === questionsObj.correct) {
-      setResult({ status: "correct", message: questionsObj.why.correct });
-
+    if (selectedAnswer === currentQuestion.correct) {
+      setResult({
+        id: currentQuestion.id,
+        question: currentQuestion.question,
+        status: "correct",
+        message: currentQuestion.why.correct,
+      });
     } else if (selectedAnswer) {
       setResult({
+        id: currentQuestion.id,
         status: "wrong",
-        message: questionsObj.why.wrong[selectedAnswer],
+        message:
+          currentQuestion.why.wrong[selectedAnswer] || "Incorrect answer.",
       });
     } else {
       setResult({ status: "none", message: "Please select an answer." });
     }
+
+    setShowResults(true);
   };
 
-  const handleSelect = (answer) => {
-    setSelectedAnswer(answer);
+  const handleContinue = () => {
+    if (currentIndex < questions.cards.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+      setSelectedAnswer(""); // Reset answer
+      setShowResults(false); // Hide results
+    }
   };
-
-  console.log(result)
 
   return (
-    <div className="flashcard-container">
-      <h1 className="question">{questionsObj.question}</h1>
-      <div className="answers-container">
-        {questionsObj.answers.map((ele, index) => (
-          <div key={index} className={`answer-option ${selectedAnswer === ele ? "selected" : ""}`} onClick={() => handleSelect(ele)}>
-            {ele}
+    <>
+      {!showResults ? (
+        <div className="flashcard-container">
+          <h1 className="question">{currentQuestion.question}</h1>
+          <div className="answers-container">
+            {currentQuestion.answers.map((option, index) => (
+              <div
+                key={index}
+                className={`answer-option ${
+                  selectedAnswer === option ? "selected" : ""
+                }`}
+                onClick={() => setSelectedAnswer(option)}
+              >
+                {option}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flashcard-button-container">
-        <button type="button" onClick={handleNext}>
-          Next
-        </button>
-      </div>
-      {result && (
-        <div className={`result ${result.status}`}>
-          <p>{result.message}</p>
+          <div className="flashcard-button-container">
+            <button type="button" onClick={handleNext}>
+              Submit
+            </button>
+          </div>
         </div>
+      ) : (
+        <>
+          <Results response={result} />
+          <button
+            type="button"
+            onClick={handleContinue}
+            disabled={
+              (currentIndex === questions.length) === 0 ||
+              currentIndex === questions.length - 1
+            }
+          >
+            {currentIndex === questions.cards.length - 1
+              ? "Finish"
+              : "Next Question"}
+          </button>
+        </>
       )}
-    </div>
+    </>
   );
 }
+
 export default Flashcard;
