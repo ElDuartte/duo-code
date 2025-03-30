@@ -24,3 +24,16 @@
   border: 3px solid gray;
 }
 
+.reset-button {
+  background-color: red;
+}
+
+.score-buttons-container {
+  background-color: white;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
