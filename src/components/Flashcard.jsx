@@ -1,19 +1,26 @@
 import { useState } from "react";
 import Results from "./Results";
 import questions from "../assets/questions.json";
+import {
+  getCurrentCard,
+  setCurrentCard,
+  setScore,
+  getCurrentScore,
+  initializeScore,
+} from "../Utils";
 
 function Flashcard() {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [result, setResult] = useState({});
   const [showResults, setShowResults] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   // Check if questions array is loaded
   if (!questions || !questions.cards || !questions.cards.length) {
     return <div>Error: Questions data is missing.</div>;
   }
 
-  const currentQuestion = questions.cards[currentIndex];
+  const currentQuestionId = getCurrentCard();
+  const currentQuestion = questions.cards[currentQuestionId];
 
   const handleNext = () => {
     if (selectedAnswer === currentQuestion.correct) {
@@ -26,6 +33,7 @@ function Flashcard() {
     } else if (selectedAnswer) {
       setResult({
         id: currentQuestion.id,
+        question: currentQuestion.question,
         status: "wrong",
         message:
           currentQuestion.why.wrong[selectedAnswer] || "Incorrect answer.",
@@ -37,19 +45,59 @@ function Flashcard() {
     setShowResults(true);
   };
 
-  const handleContinue = () => {
-    if (currentIndex < questions.cards.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-      setSelectedAnswer(""); // Reset answer
-      setShowResults(false); // Hide results
+  const handleReset = () => {
+    //manual reset for testing
+    setCurrentCard(0);
+  };
+
+  initializeScore();
+  const handleScorePlus = () => {
+    // if (getCurrentScore === 0) { }
+    setScore(getCurrentScore() + 1);
+  };
+
+  const handleScoreMinus = () => {
+    if (getCurrentScore !== 0) {
+      setScore(getCurrentScore() - 1);
+    }
+    setScore(0);
+  };
+
+  const handleScoreReset = () => {
+    setScore(0);
+  };
+
+  const toggleShowResult = () => {
+    if (showResults) {
+      setShowResults(false);
+    } else {
+      setShowResults(true);
     }
   };
 
   return (
     <>
+      <div className="score-buttons-container">
+        <button className="reset-button" onClick={handleReset}>
+          questions reset
+        </button>
+        <button className="score-plus-button" onClick={handleScorePlus}>
+          score plus
+        </button>
+        <button className="score-reset-button" onClick={handleScoreReset}>
+          score reset
+        </button>
+        <button className="score-minus-button" onClick={handleScoreMinus}>
+          score minus
+        </button>
+      </div>
+
       {!showResults ? (
         <div className="flashcard-container">
-          <h1 className="question">{currentQuestion.question}</h1>
+          <h1>Score: {getCurrentScore()}</h1>
+          <h1 className="question">
+            {currentQuestionId + 1}) {currentQuestion.question}
+          </h1>
           <div className="answers-container">
             {currentQuestion.answers.map((option, index) => (
               <div
@@ -59,7 +107,7 @@ function Flashcard() {
                 }`}
                 onClick={() => setSelectedAnswer(option)}
               >
-                {option}
+                {index + 1}) {option}
               </div>
             ))}
           </div>
@@ -71,19 +119,12 @@ function Flashcard() {
         </div>
       ) : (
         <>
-          <Results response={result} />
-          <button
-            type="button"
-            onClick={handleContinue}
-            disabled={
-              (currentIndex === questions.length) === 0 ||
-              currentIndex === questions.length - 1
-            }
-          >
-            {currentIndex === questions.cards.length - 1
-              ? "Finish"
-              : "Next Question"}
-          </button>
+          <Results
+            response={result}
+            showResults={() => {
+              toggleShowResult();
+            }}
+          />
         </>
       )}
     </>
